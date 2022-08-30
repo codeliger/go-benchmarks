@@ -6,24 +6,16 @@ import (
 
 type Slice []int
 
-func (slice *Slice) PushPointer(i int) {
-	*slice = append(*slice, i)
-}
-
 func (slice Slice) Push(i int) []int {
 	return append(slice, i)
 }
 
-func (slice *Slice) Set(i int) {
-	(*slice)[i] = i
+func (slice *Slice) PushPointer(i int) {
+	*slice = append(*slice, i)
 }
 
-func BenchmarkSlicePointerPush(b *testing.B) {
-	slice := Slice{}
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		slice.PushPointer(i)
-	}
+func (slice *Slice) Set(i int) {
+	(*slice)[i] = i
 }
 
 func BenchmarkSlicePush(b *testing.B) {
@@ -34,8 +26,8 @@ func BenchmarkSlicePush(b *testing.B) {
 	}
 }
 
-func BenchmarkSlicePointerCapacityPush(b *testing.B) {
-	slice := make(Slice, 0, b.N)
+func BenchmarkSlicePointerPush(b *testing.B) {
+	slice := Slice{}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		slice.PushPointer(i)
@@ -50,18 +42,26 @@ func BenchmarkSliceCapacityPush(b *testing.B) {
 	}
 }
 
-func BenchmarkSliceSizeSet(b *testing.B) {
-	slice := make(Slice, b.N)
+func BenchmarkSlicePointerCapacityPush(b *testing.B) {
+	slice := make(Slice, 0, b.N)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		slice[i] = i
+		slice.PushPointer(i)
 	}
 }
 
-func BenchmarkSlicePointerSet(b *testing.B) {
+func BenchmarkSlicePointerPreallocatedSet(b *testing.B) {
 	slice := make(Slice, b.N)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		slice.Set(i)
+	}
+}
+
+func BenchmarkSlicePreallocatedSet(b *testing.B) {
+	slice := make(Slice, b.N)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		slice[i] = i
 	}
 }
