@@ -1,5 +1,6 @@
 # Go Pointer Benchmarks
 
+```
 goos: linux
 goarch: amd64
 pkg: github.com/codeliger/go-benchmarks
@@ -10,3 +11,4 @@ BenchmarkSlicePointerPreallocatePush-24    	532548985	         1.961 ns/op
 BenchmarkSlicePreallocatePush-24           	1000000000	         0.7064 ns/op
 PASS
 ok  	github.com/codeliger/go-benchmarks	7.195s
+```
