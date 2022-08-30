@@ -10,16 +10,16 @@ func (slice *Slice) PushPointer(i int) {
 	*slice = append(*slice, i)
 }
 
+func (slice Slice) Push(i int) []int {
+	return append(slice, i)
+}
+
 func BenchmarkSlicePointerPush(b *testing.B) {
 	slice := Slice{}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		slice.PushPointer(i)
 	}
-}
-
-func (slice Slice) Push(i int) []int {
-	return append(slice, i)
 }
 
 func BenchmarkSlicePush(b *testing.B) {
