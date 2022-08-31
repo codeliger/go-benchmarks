@@ -59,3 +59,13 @@ func BenchmarkSlicePreallocatedSet(b *testing.B) {
 		slice[i] = i
 	}
 }
+
+func BenchmarkPreallocateSlice(b *testing.B) {
+	slice := make(Slice, b.N)
+	_ = slice
+}
+
+func BenchmarkPreallocateSliceCapacity(b *testing.B) {
+	slice := make(Slice, 0, b.N)
+	_ = slice
+}
